@@ -11,6 +11,11 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 
 from pathlib import Path
+import os
+if os.path.isfile('env.py'):
+    import env
+
+development = os.environ.get("DEVELOPMENT")
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -20,10 +25,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-10m03s0$j0a%ip$2xem1)##@7$y0t(8(h4&kk^8^$jq(+f!b*d'
+SECRET_KEY = os.environ.get("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = development
 
 ALLOWED_HOSTS = [
     'localhost',
@@ -77,11 +82,10 @@ TEMPLATES = [
 ]
 
 AUTHENTICATION_BACKENDS=[
-	# Needed to login by username in Django admin, regardless of `allauth`
-	'django.contrib.auth.backends.ModelBackend',
-	
-	# `allauth` specific authentication methods, such as login by e-mail
-	'allauth.account.auth_backends.AuthenticationBackend',
+    # Needed to login by username in Django admin, regardless of `allauth`
+    'django.contrib.auth.backends.ModelBackend',
+    # `allauth` specific authentication methods, such as login by e-mail
+    'allauth.account.auth_backends.AuthenticationBackend',
 ]
 
 WSGI_APPLICATION = 'boutique_ado.wsgi.application'
